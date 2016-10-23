@@ -13,10 +13,12 @@ PodcastData = namedtuple('PodcastData', [
 
 
 # Podcast states
-UnmergedPodcast = namedtuple('UnmergedPodcast', 'podcast_data')
-RequestedPodcast = namedtuple('RequestedPodcast', 'podcast_data')
-CancelledPodcast = namedtuple('CancelledPodcast', 'podcast_data')
-NewPodcast = namedtuple('NewPodcast', 'podcast_data location')
-StartedPodcast = namedtuple('StartedPodcast', 'podcast_data location')
-FinishedPodcast = namedtuple('FinishedPodcast', 'podcast_data location')
-DeletedPodcast = namedtuple('DeletedPodcast', 'podcast_data')
+UnmergedStatus = namedtuple('UnmergedStatus', '')
+RequestedStatus = namedtuple('RequestedStatus', '')
+CancelledStatus = namedtuple('CancelledStatus', '')
+NewStatus = namedtuple('NewStatus', 'location')
+StartedStatus = namedtuple('StartedStatus', 'location')
+FinishedStatus = namedtuple('FinishedStatus', 'location')
+DeletedStatus = namedtuple('DeletedStatus', '')
+
+Podcast = namedtuple('Podcast', 'data status')

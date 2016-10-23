@@ -1,10 +1,11 @@
 from feeds import unmerged_podcasts_from_feed
 from models import Channel
-from models import RequestedPodcast
+from models import Podcast
+from models import RequestedStatus
 
 
 def _uniquer(unmerged_podcast):
-    return unmerged_podcast.podcast_data.audio_link
+    return unmerged_podcast.data.audio_link
 
 
 def merge_podcasts(channel, unmerged_podcasts):
@@ -17,7 +18,9 @@ def merge_podcasts(channel, unmerged_podcasts):
     for unmerged_podcast in unmerged_podcasts:
         if _uniquer(unmerged_podcast) not in known_podcast_audio_links:
             new_podcasts.append(
-                RequestedPodcast(podcast_data=unmerged_podcast.podcast_data))
+                Podcast(
+                    data=unmerged_podcast.data,
+                    status=RequestedStatus()))
         known_podcast_audio_links.add(_uniquer(unmerged_podcast))
 
     return new_podcasts

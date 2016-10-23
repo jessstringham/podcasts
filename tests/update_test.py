@@ -17,4 +17,4 @@ def test_merge_podcast():
     podcasts = merge_podcasts(channel, unmerged_podcasts)
 
     assert len(podcasts) == 1
-    assert type(podcasts[0]).__name__ == 'RequestedPodcast'
+    assert type(podcasts[0].status).__name__ == 'RequestedStatus'

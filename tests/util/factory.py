@@ -1,13 +1,14 @@
-from podcast.models import CancelledPodcast
+from podcast.models import CancelledStatus
 from podcast.models import Channel
 from podcast.models import ChannelInfo
-from podcast.models import DeletedPodcast
-from podcast.models import FinishedPodcast
-from podcast.models import NewPodcast
+from podcast.models import DeletedStatus
+from podcast.models import FinishedStatus
+from podcast.models import NewStatus
+from podcast.models import Podcast
 from podcast.models import PodcastData
-from podcast.models import RequestedPodcast
-from podcast.models import StartedPodcast
-from podcast.models import UnmergedPodcast
+from podcast.models import RequestedStatus
+from podcast.models import StartedStatus
+from podcast.models import UnmergedStatus
 
 DEFAULT_CHANNEL_INFO_NAME = 'test_name'
 DEFAULT_CHANNEL_INFO_URL = 'url'
@@ -40,41 +41,45 @@ def podcast_data_factory(audio_link=None):
 
 
 def unmerged_podcast_factory():
-    return UnmergedPodcast(
-        podcast_data=podcast_data_factory())
+    return Podcast(
+        status=UnmergedStatus(),
+        data=podcast_data_factory())
 
 
 def requested_podcast_factory():
-    return RequestedPodcast(
-        podcast_data=podcast_data_factory())
+    return Podcast(
+        status=RequestedStatus(),
+        data=podcast_data_factory())
 
 
 def cancelled_podcast_factory():
-    return CancelledPodcast(
-        podcast_data=podcast_data_factory())
+    return Podcast(
+        status=CancelledStatus(),
+        data=podcast_data_factory())
 
 
 def new_podcast_factory():
-    return NewPodcast(
-        podcast_data=podcast_data_factory(),
-        location=DEFAULT_PODCAST_LOCATION)
+    return Podcast(
+        status=NewStatus(location=DEFAULT_PODCAST_LOCATION),
+        data=podcast_data_factory())
 
 
 def started_podcast_factory():
-    return StartedPodcast(
-        podcast_data=podcast_data_factory(),
-        location=DEFAULT_PODCAST_LOCATION)
+    return Podcast(
+        status=StartedStatus(location=DEFAULT_PODCAST_LOCATION),
+        data=podcast_data_factory())
 
 
 def finished_podcast_factory():
-    return FinishedPodcast(
-        podcast_data=podcast_data_factory(),
-        location=DEFAULT_PODCAST_LOCATION)
+    return Podcast(
+        status=FinishedStatus(location=DEFAULT_PODCAST_LOCATION),
+        data=podcast_data_factory())
 
 
 def deleted_podcast_factory():
-    return DeletedPodcast(
-        podcast_data=podcast_data_factory())
+    return Podcast(
+        status=DeletedStatus(),
+        data=podcast_data_factory())
 
 
 def known_podcasts_factory():
