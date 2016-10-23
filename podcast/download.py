@@ -1,9 +1,10 @@
-from models import NewPodcast
-from feeds import unmerged_podcasts_from_feed
+from podcast.models import NewPodcast
 
 
 def _download_location(podcast):
-    return podcast.podcast_data.audiolink['url'].split('/')[-1].split('.')[-1]
+    # TODO: Use a library here
+    return podcast.podcast_data.audio_link['href'].split('/')[-1].split('.')[0]
+
 
 def download_podcast(podcast):
     location = _download_location(podcast)

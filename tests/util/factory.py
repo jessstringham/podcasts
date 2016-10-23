@@ -1,14 +1,13 @@
-
-from podcast.models import ChannelInfo
-from podcast.models import Channel
-from podcast.models import PodcastData
-from podcast.models import UnmergedPodcast
-from podcast.models import RequestedPodcast
 from podcast.models import CancelledPodcast
-from podcast.models import NewPodcast
-from podcast.models import StartedPodcast
-from podcast.models import FinishedPodcast
+from podcast.models import Channel
+from podcast.models import ChannelInfo
 from podcast.models import DeletedPodcast
+from podcast.models import FinishedPodcast
+from podcast.models import NewPodcast
+from podcast.models import PodcastData
+from podcast.models import RequestedPodcast
+from podcast.models import StartedPodcast
+from podcast.models import UnmergedPodcast
 
 DEFAULT_CHANNEL_INFO_NAME = 'test_name'
 DEFAULT_CHANNEL_INFO_URL = 'url'
@@ -20,6 +19,7 @@ PODCAST_DATA_PUBLISHED = 'published'
 PODCAST_DATA_AUDIO_LINK = 'audio_link'
 
 DEFAULT_PODCAST_LOCATION = 'location'
+
 
 def channel_info_factory():
     return ChannelInfo(
@@ -43,9 +43,11 @@ def unmerged_podcast_factory():
     return UnmergedPodcast(
         podcast_data=podcast_data_factory())
 
+
 def requested_podcast_factory():
     return RequestedPodcast(
         podcast_data=podcast_data_factory())
+
 
 def cancelled_podcast_factory():
     return CancelledPodcast(
@@ -63,10 +65,12 @@ def started_podcast_factory():
         podcast_data=podcast_data_factory(),
         location=DEFAULT_PODCAST_LOCATION)
 
+
 def finished_podcast_factory():
     return FinishedPodcast(
         podcast_data=podcast_data_factory(),
         location=DEFAULT_PODCAST_LOCATION)
+
 
 def deleted_podcast_factory():
     return DeletedPodcast(

@@ -1,12 +1,15 @@
-import os
 import cPickle as pickle
+import os
 
 
 CACHE_LOCATION = '.cache'
 
 
 def get_cache_location(directory, channel):
-    return os.path.join(directory, channel.channel_info.directory, CACHE_LOCATION)
+    return os.path.join(
+        directory,
+        channel.channel_info.directory,
+        CACHE_LOCATION)
 
 
 def load_known_podcasts(directory, channel):

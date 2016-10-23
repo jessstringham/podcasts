@@ -1,8 +1,8 @@
-from factory import channel_factory
-from factory import unmerged_podcast_factory
+from util.factory import channel_factory
+from util.factory import unmerged_podcast_factory
 
-import podcast.update
 from podcast.update import merge_podcasts
+
 
 def test_merge_podcast():
     # Create a channel with 3 unmerged podcasts

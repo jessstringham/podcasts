@@ -1,21 +1,24 @@
 import argparse
-from collections import Counter
 import pprint
+from collections import Counter
 
 from cache import save_radio
 from channel_config import load_channel_config
-from update import update_channel
 from download import download_channel
+from update import update_channel
+
 
 def print_status(radio):
     pprint.pprint(dict(
-            Counter(
-                (channel.channel_info.name, type(podcast).__name__)
-                for channel in radio
-                for podcast in channel.known_podcasts)))
+        Counter(
+            (channel.channel_info.name, type(podcast).__name__)
+            for channel in radio
+            for podcast in channel.known_podcasts)))
+
 
 def load_radio(directory, config):
     load_channel_config(directory, config)
+
 
 def update_radio(radio):
     return [
@@ -23,15 +26,16 @@ def update_radio(radio):
         for channel in radio
     ]
 
+
 def download_radio(directory, config):
     return [
         download_channel(channel)
         for channel in radio
     ]
 
+
 def save(radio, directory):
     save_radio(radio, directory)
-
 
 
 if __name__ == '__main__':

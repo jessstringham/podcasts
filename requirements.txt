@@ -1,4 +1,4 @@
 PyYAML==3.11
 feedparser==5.2.1
-simplejson
 pytest
+simplejson
