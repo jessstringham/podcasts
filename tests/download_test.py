@@ -16,4 +16,4 @@ def test_download_location():
                 'rel': u'enclosure',
             }))
 
-    assert _download_location(podcast_data) == '597'
+    assert _download_location('dir', podcast_data) == 'dir/597.mp3'

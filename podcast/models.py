@@ -1,5 +1,6 @@
 from collections import namedtuple
 
+Radio = namedtuple('Radio', 'channels directory')
 ChannelInfo = namedtuple('ChannelInfo', 'name url directory')
 Channel = namedtuple('Channel', 'channel_info known_podcasts')
 
