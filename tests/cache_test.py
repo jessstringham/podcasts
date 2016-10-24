@@ -12,4 +12,5 @@ TEST_DIR = 'tests/tmp'
 def test_smoke():
     channel = channel_factory()
     save_known_podcasts('tmp', channel)
-    assert load_known_podcasts('tmp', channel) == channel.known_podcasts
+    assert load_known_podcasts(
+        'tmp', channel.channel_info) == channel.known_podcasts

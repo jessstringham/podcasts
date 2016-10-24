@@ -19,7 +19,7 @@ def print_status(radio):
 
 def load_radio(directory, config):
     return Radio(
-        channels=load_channel_config(directory, config),
+        channels=load_channel_config(config, directory),
         directory=directory)
 
 

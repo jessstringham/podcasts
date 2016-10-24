@@ -5,15 +5,15 @@ import os
 CACHE_LOCATION = '.cache'
 
 
-def get_cache_location(directory, channel):
+def _cache_location(directory, channel_info):
     return os.path.join(
         directory,
-        channel.channel_info.directory,
+        channel_info.directory,
         CACHE_LOCATION)
 
 
-def load_known_podcasts(directory, channel):
-    filename = get_cache_location(directory, channel)
+def load_known_podcasts(directory, channel_info):
+    filename = _cache_location(directory, channel_info)
     if not os.path.exists(filename):
         return []
 
@@ -24,7 +24,7 @@ def load_known_podcasts(directory, channel):
 
 
 def save_known_podcasts(directory, channel):
-    filename = get_cache_location(directory, channel)
+    filename = _cache_location(directory, channel.channel_info)
 
     if not os.path.exists(os.path.dirname(filename)):
         os.makedirs(os.path.dirname(filename))
