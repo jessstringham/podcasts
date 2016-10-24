@@ -1,6 +1,6 @@
 import os
 import urllib
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 from podcast.models import NewStatus
 

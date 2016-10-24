@@ -24,17 +24,21 @@ def load_radio(directory, config):
 
 
 def update_radio(radio):
-    return [
+    updated_channels = [
         update_channel(channel)
         for channel in radio.channels
     ]
 
+    return radio._replace(channels=updated_channels)
+
 
 def download_radio(radio):
-    return [
+    downloaded_channels = [
         download_channel(radio.directory, channel)
         for channel in radio.channels
     ]
+
+    return radio._replace(channels=downloaded_channels)
 
 
 def save(radio, directory):

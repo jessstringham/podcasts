@@ -1,5 +1,5 @@
-import cPickle as pickle
 import os
+import pickle
 
 
 CACHE_LOCATION = '.cache'
@@ -17,7 +17,7 @@ def load_known_podcasts(directory, channel_info):
     if not os.path.exists(filename):
         return []
 
-    with open(filename) as f:
+    with open(filename, 'rb') as f:
         cache = pickle.load(f)
 
     return cache
@@ -29,7 +29,7 @@ def save_known_podcasts(directory, channel):
     if not os.path.exists(os.path.dirname(filename)):
         os.makedirs(os.path.dirname(filename))
 
-    with open(filename, 'w') as f:
+    with open(filename, 'wb') as f:
         pickle.dump(channel.known_podcasts, f)
 
 

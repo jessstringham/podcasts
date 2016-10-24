@@ -1,7 +1,8 @@
 import yaml
-from cache import load_known_podcasts
-from models import Channel
-from models import ChannelInfo
+
+from podcast.cache import load_known_podcasts
+from podcast.models import Channel
+from podcast.models import ChannelInfo
 
 
 def parse_channel_info(channel_dict):

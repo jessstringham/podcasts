@@ -1,9 +1,10 @@
 from time import mktime
 
 import feedparser
-from models import Podcast
-from models import PodcastData
-from models import UnmergedStatus
+
+from podcast.models import Podcast
+from podcast.models import PodcastData
+from podcast.models import UnmergedStatus
 
 
 def _find_mp3_link_in_feed_item_links(feed_item_links):
