@@ -19,7 +19,7 @@ def _find_mp3_link_in_feed_item_links(
 
 def _podcasts_from_feed(
         url_or_stream: typing.Union[str, typing.IO[typing.AnyStr]]
-) -> dict:
+) -> typing.List[dict]:
     return feedparser.parse(url_or_stream)['entries']
 
 

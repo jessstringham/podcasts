@@ -56,7 +56,7 @@ if __name__ == '__main__':
     parser.add_argument('--directory')
     args = parser.parse_args()
 
-    radio = load_radio(args.config, args.directory)
+    radio = load_radio(args.directory, args.config)
 
     action = {
         'download': download_radio,

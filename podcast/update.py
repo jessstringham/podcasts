@@ -27,12 +27,11 @@ def merge_podcasts(
                     status=RequestedStatus()))
         known_podcast_audio_links.add(_uniquer(unmerged_podcast))
 
-    return new_podcasts
+    return channel.known_podcasts + new_podcasts
 
 
 def update_channel(channel: Channel) -> Channel:
     unmerged_podcasts = unmerged_podcasts_from_feed(channel)
 
     return channel._replace(
-        known_podcasts=channel.known_podcasts
-        + merge_podcasts(channel, unmerged_podcasts))
+        known_podcasts=merge_podcasts(channel, unmerged_podcasts))
