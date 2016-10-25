@@ -16,17 +16,25 @@ def test_parse_channel_info():
 
 def test_load_config_smoke_test(monkeypatch):
     def mock_load_known_podcasts(_, __):
-        return {}
+        return []
 
     monkeypatch.setattr(podcast.channel_config,
                         'load_known_podcasts', mock_load_known_podcasts)
 
     actual = load_channel_config('directory', 'tests/data/test_channel_config')
     expected = [
-        Channel(ChannelInfo('podcast_name_1',
-                            'podcast_url_1', 'podcast_dir_1'), {}),
-        Channel(ChannelInfo('podcast_name_2',
-                            'podcast_url_2', 'podcast_dir_2'), {}),
+        Channel(
+            ChannelInfo(
+                name='podcast_name_1',
+                url='podcast_url_1',
+                directory='podcast_dir_1'),
+            known_podcasts=[]),
+        Channel(
+            ChannelInfo(
+                name='podcast_name_2',
+                url='podcast_url_2',
+                directory='podcast_dir_2'),
+            known_podcasts=[]),
     ]
 
     assert actual == expected

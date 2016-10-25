@@ -6,9 +6,10 @@ from urllib.parse import urlparse
 from podcast.models import Channel
 from podcast.models import NewStatus
 from podcast.models import Podcast
+from podcast.models import RadioDirectory
 
 
-def _download_location(directory: str, podcast: Podcast) -> str:
+def _download_location(directory: RadioDirectory, podcast: Podcast) -> str:
     return os.path.join(
         directory,
         urlparse(podcast.data.audio_link['href']).path.split('/')[-1])
@@ -30,7 +31,7 @@ def _download_from_url(url: str, location: str) -> bool:
         return False
 
 
-def download_podcast(directory: str, podcast: Podcast) -> Podcast:
+def download_podcast(directory: RadioDirectory, podcast: Podcast) -> Podcast:
     location = _download_location(directory, podcast)
 
     # TODO: This takes some time, especially when there are a lot to
@@ -46,7 +47,7 @@ def download_podcast(directory: str, podcast: Podcast) -> Podcast:
         return podcast
 
 
-def download_channel(directory: str, channel: Channel) -> Channel:
+def download_channel(directory: RadioDirectory, channel: Channel) -> Channel:
     updated_podcasts = []
     for known_podcast in channel.known_podcasts:
         if type(known_podcast.status).__name__ == 'RequestedStatus':

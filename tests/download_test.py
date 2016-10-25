@@ -2,6 +2,7 @@ from util.factory import podcast_data_factory
 
 from podcast.download import _download_location
 from podcast.models import Podcast
+from podcast.models import RadioDirectory
 from podcast.models import RequestedStatus
 
 
@@ -16,4 +17,5 @@ def test_download_location():
                 'rel': u'enclosure',
             }))
 
-    assert _download_location('dir', podcast_data) == 'dir/597.mp3'
+    assert _download_location(RadioDirectory(
+        'dir'), podcast_data) == 'dir/597.mp3'

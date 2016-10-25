@@ -1,0 +1,3 @@
+import typing 
+
+def load(file: typing.IO[typing.Any]) -> typing.Any: ...

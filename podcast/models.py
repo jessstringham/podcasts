@@ -38,6 +38,9 @@ Channel = typing.NamedTuple('Channel', [
     ('channel_info', ChannelInfo),
     ('known_podcasts', typing.List[Podcast])])
 
+RadioDirectory = typing.NewType('RadioDirectory', str)
+
+
 Radio = typing.NamedTuple('Radio', [
     ('channels', typing.List[Channel]),
-    ('directory', str)])
+    ('directory', RadioDirectory)])

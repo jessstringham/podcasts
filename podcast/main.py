@@ -3,11 +3,12 @@ import pprint
 import typing  # noqa
 from collections import Counter
 
-from cache import save_radio
-from channel_config import load_channel_config
-from download import download_channel
-from models import Radio
-from update import update_channel
+from podcast.cache import save_radio
+from podcast.channel_config import load_channel_config
+from podcast.download import download_channel
+from podcast.models import Radio
+from podcast.models import RadioDirectory
+from podcast.update import update_channel
 
 
 def print_status(radio: Radio) -> Radio:
@@ -23,7 +24,7 @@ def print_status(radio: Radio) -> Radio:
 def load_radio(directory: str, config: str) -> Radio:
     return Radio(
         channels=load_channel_config(config, directory),
-        directory=directory)
+        directory=RadioDirectory(directory))
 
 
 def update_radio(radio: Radio) -> Radio:

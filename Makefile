@@ -1,4 +1,4 @@
-PREFIX=venv/bin/
+PREFIX=venv/bin
 
 clean:
 	rm -r venv
@@ -6,12 +6,15 @@ clean:
 
 test: venv
 	$(MAKE) pytest
-	MYPYPATH=podcast $(PREFIX)/mypy podcast --disallow-untyped-defs -s
-	MYPYPATH=podcast:tests $(PREFIX)/mypy tests -s
+	$(MAKE) check_types
 	$(PREFIX)/pre-commit run --all-files
 
 pytest: venv
 	$(PREFIX)/python -m pytest tests -s
+
+check_types: venv
+	MYPYPATH=podcast $(PREFIX)/mypy podcast --disallow-untyped-defs
+	MYPYPATH=podcast:tests $(PREFIX)/mypy tests --check-untyped-defs
 
 
 venv: requirements.txt
