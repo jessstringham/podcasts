@@ -3,6 +3,7 @@ from podcast.channel_config import load_channel_config
 from podcast.channel_config import parse_channel_info
 from podcast.models import Channel
 from podcast.models import ChannelInfo
+from podcast.models import RadioDirectory
 
 
 def test_parse_channel_info():
@@ -21,7 +22,8 @@ def test_load_config_smoke_test(monkeypatch):
     monkeypatch.setattr(podcast.channel_config,
                         'load_known_podcasts', mock_load_known_podcasts)
 
-    actual = load_channel_config('directory', 'tests/data/test_channel_config')
+    actual = load_channel_config(RadioDirectory(
+        'directory'), 'tests/data/test_channel_config')
     expected = [
         Channel(
             ChannelInfo(

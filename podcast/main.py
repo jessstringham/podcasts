@@ -21,9 +21,9 @@ def print_status(radio: Radio) -> Radio:
     return radio
 
 
-def load_radio(directory: str, config: str) -> Radio:
+def load_radio(directory: RadioDirectory, config: str) -> Radio:
     return Radio(
-        channels=load_channel_config(config, directory),
+        channels=load_channel_config(directory, config),
         directory=RadioDirectory(directory))
 
 
