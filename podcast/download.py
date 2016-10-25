@@ -1,19 +1,21 @@
 import os
-import urllib
+import urllib.request
 from urllib.parse import urlparse
 
+from podcast.models import Channel
 from podcast.models import NewStatus
+from podcast.models import Podcast
 
 
-def _download_location(directory, podcast):
+def _download_location(directory: str, podcast: Podcast) -> str:
     return os.path.join(
         directory,
         urlparse(podcast.data.audio_link['href']).path.split('/')[-1])
 
 
-def _download_from_url(url, location):
+def _download_from_url(url: str, location: str) -> bool:
     try:
-        urllib.urlretrieve(url, location)
+        urllib.request.urlretrieve(url, location)
         return True
     except IOError:
         # If a connection can't be made, IOError is raised
@@ -22,12 +24,12 @@ def _download_from_url(url, location):
         # requesting it), or internet connectivity (and should tell
         # us), or just a fluke (and should retry)?
         return False
-    except urllib.error.ContentTooShortError:
+    except urllib.request.error.ContentTooShortError:
         # If the download gets interrupted, we should try again later
         return False
 
 
-def download_podcast(directory, podcast):
+def download_podcast(directory: str, podcast: Podcast) -> Podcast:
     location = _download_location(directory, podcast)
 
     # TODO: This takes some time, especially when there are a lot to
@@ -43,9 +45,11 @@ def download_podcast(directory, podcast):
         return podcast
 
 
-def download_channel(directory, channel):
+def download_channel(directory: str, channel: Channel) -> Channel:
     updated_podcasts = []
-    for known_podcast in channel.known_podcast:
+    for known_podcast in channel.known_podcasts:
         if type(known_podcast.status).__name__ == 'RequestedStatus':
             known_podcast = download_podcast(directory, known_podcast)
         updated_podcasts.append(known_podcast)
+
+    return channel._replace(known_podcasts=updated_podcasts)

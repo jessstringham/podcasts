@@ -1,3 +1,5 @@
+import typing
+
 import yaml
 
 from podcast.cache import load_known_podcasts
@@ -5,14 +7,14 @@ from podcast.models import Channel
 from podcast.models import ChannelInfo
 
 
-def parse_channel_info(channel_dict):
+def parse_channel_info(channel_dict: dict) -> ChannelInfo:
     return ChannelInfo(
         name=channel_dict['name'],
         url=channel_dict['url'],
         directory=channel_dict['directory'])
 
 
-def load_channel(directory, channel_config):
+def load_channel(directory: str, channel_config: dict) -> Channel:
     channel_info = parse_channel_info(channel_config)
 
     return Channel(
@@ -20,7 +22,7 @@ def load_channel(directory, channel_config):
         known_podcasts=load_known_podcasts(directory, channel_info))
 
 
-def load_channel_config(directory, filename):
+def load_channel_config(directory: str, filename: str) -> typing.List[Channel]:
     with open(filename) as f:
         radio_config = yaml.load(f)
 

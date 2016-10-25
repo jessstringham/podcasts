@@ -1,25 +1,43 @@
+import typing
 from collections import namedtuple
 
-Radio = namedtuple('Radio', 'channels directory')
-ChannelInfo = namedtuple('ChannelInfo', 'name url directory')
-Channel = namedtuple('Channel', 'channel_info known_podcasts')
 
-
-PodcastData = namedtuple('PodcastData', [
-    'title',  # title
-    'subtitle',  # subtitle
-    'published',  # time published
-    'audio_link',  # string of the audio url, or None if we couldn't find one
+PodcastData = typing.NamedTuple('PodcastData', [
+    ('title', str),  # title
+    ('subtitle', str),  # subtitle
+    ('published', float),  # time published
+    # string of the audio url, or None if we couldn't find one
+    ('audio_link', typing.Dict[str, str]),
 ])
 
 
 # Podcast states
-UnmergedStatus = namedtuple('UnmergedStatus', '')
-RequestedStatus = namedtuple('RequestedStatus', '')
-CancelledStatus = namedtuple('CancelledStatus', '')
-NewStatus = namedtuple('NewStatus', 'location')
-StartedStatus = namedtuple('StartedStatus', 'location')
-FinishedStatus = namedtuple('FinishedStatus', 'location')
-DeletedStatus = namedtuple('DeletedStatus', '')
+UnmergedStatus = typing.NamedTuple('UnmergedStatus', [])
+RequestedStatus = typing.NamedTuple('RequestedStatus', [])
+CancelledStatus = typing.NamedTuple('CancelledStatus', [])
+NewStatus = typing.NamedTuple('NewStatus', [('location', str)])
+StartedStatus = typing.NamedTuple('StartedStatus', [('location', str)])
+FinishedStatus = typing.NamedTuple('FinishedStatus', [('location', str)])
+DeletedStatus = typing.NamedTuple('DeletedStatus', [])
 
-Podcast = namedtuple('Podcast', 'data status')
+Podcast = typing.NamedTuple('Podcast', [
+    ('data', PodcastData),
+    ('status', typing.Union[
+        UnmergedStatus,
+        RequestedStatus,
+        CancelledStatus,
+        NewStatus,
+        StartedStatus,
+        FinishedStatus,
+        DeletedStatus,
+    ])])
+
+ChannelInfo = namedtuple('ChannelInfo', 'name url directory')
+
+Channel = typing.NamedTuple('Channel', [
+    ('channel_info', ChannelInfo),
+    ('known_podcasts', typing.List[Podcast])])
+
+Radio = typing.NamedTuple('Radio', [
+    ('channels', typing.List[Channel]),
+    ('directory', str)])

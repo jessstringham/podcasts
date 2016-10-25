@@ -1,12 +1,19 @@
+import typing
+
 from podcast.feeds import unmerged_podcasts_from_feed
+from podcast.models import Channel
+from podcast.models import Podcast
 from podcast.models import RequestedStatus
 
 
-def _uniquer(unmerged_podcast):
-    return unmerged_podcast.data.audio_link
+def _uniquer(unmerged_podcast: Podcast) -> str:
+    return unmerged_podcast.data.audio_link['href']
 
 
-def merge_podcasts(channel, unmerged_podcasts):
+def merge_podcasts(
+        channel: Channel,
+        unmerged_podcasts: typing.List[Podcast]) -> typing.List[Podcast]:
+
     known_podcast_audio_links = set(
         _uniquer(podcast)
         for podcast in channel.known_podcasts)
@@ -23,7 +30,7 @@ def merge_podcasts(channel, unmerged_podcasts):
     return new_podcasts
 
 
-def update_channel(channel):
+def update_channel(channel: Channel) -> Channel:
     unmerged_podcasts = unmerged_podcasts_from_feed(channel)
 
     return channel._replace(

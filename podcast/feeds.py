@@ -1,23 +1,29 @@
+import typing
 from time import mktime
 
 import feedparser
 
+from podcast.models import Channel
 from podcast.models import Podcast
 from podcast.models import PodcastData
 from podcast.models import UnmergedStatus
 
 
-def _find_mp3_link_in_feed_item_links(feed_item_links):
+def _find_mp3_link_in_feed_item_links(
+        feed_item_links: typing.List[typing.Dict[str, str]]
+) -> typing.Dict[str, str]:
     for item in feed_item_links:
         if item['type'].startswith('audio'):
             return item
 
 
-def _podcasts_from_feed(url_or_stream):
+def _podcasts_from_feed(
+        url_or_stream: typing.Union[str, typing.IO[typing.AnyStr]]
+) -> dict:
     return feedparser.parse(url_or_stream)['entries']
 
 
-def unmerged_podcasts_from_feed(channel):
+def unmerged_podcasts_from_feed(channel: Channel) -> typing.List[Podcast]:
     feed = _podcasts_from_feed(channel.channel_info.url)
     return [
         Podcast(

@@ -1,18 +1,25 @@
 import os
 import pickle
+import typing
 
+from podcast.models import Channel
+from podcast.models import ChannelInfo
+from podcast.models import Podcast
+from podcast.models import Radio
 
 CACHE_LOCATION = '.cache'
 
 
-def _cache_location(directory, channel_info):
+def _cache_location(directory: str, channel_info: ChannelInfo) -> str:
     return os.path.join(
         directory,
         channel_info.directory,
         CACHE_LOCATION)
 
 
-def load_known_podcasts(directory, channel_info):
+def load_known_podcasts(
+        directory: str,
+        channel_info: ChannelInfo) -> typing.List[Podcast]:
     filename = _cache_location(directory, channel_info)
     if not os.path.exists(filename):
         return []
@@ -23,7 +30,7 @@ def load_known_podcasts(directory, channel_info):
     return cache
 
 
-def save_known_podcasts(directory, channel):
+def save_known_podcasts(directory: str, channel: Channel) -> None:
     filename = _cache_location(directory, channel.channel_info)
 
     if not os.path.exists(os.path.dirname(filename)):
@@ -33,6 +40,6 @@ def save_known_podcasts(directory, channel):
         pickle.dump(channel.known_podcasts, f)
 
 
-def save_radio(directory, radio):
-    for channel in radio:
-        save_known_podcasts(directory, channel)
+def save_radio(radio: Radio) -> None:
+    for channel in radio.channels:
+        save_known_podcasts(radio.directory, channel)

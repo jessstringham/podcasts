@@ -1,3 +1,5 @@
+import typing
+
 from podcast.models import CancelledStatus
 from podcast.models import Channel
 from podcast.models import ChannelInfo
@@ -16,20 +18,27 @@ DEFAULT_CHANNEL_INFO_DIRECTORY = 'test_dir'
 
 PODCAST_DATA_TITLE = 'title'
 PODCAST_DATA_SUBTITLE = 'subtitle'
-PODCAST_DATA_PUBLISHED = 'published'
-PODCAST_DATA_AUDIO_LINK = 'audio_link'
+PODCAST_DATA_PUBLISHED = 123.0
+PODCAST_DATA_AUDIO_LINK = {
+    'length': u'0',
+    'href': u'http://google.com',
+    'type': u'audio/mpeg',
+    'rel': u'enclosure',
+}
 
 DEFAULT_PODCAST_LOCATION = 'location'
 
 
-def channel_info_factory():
+def channel_info_factory() -> ChannelInfo:
     return ChannelInfo(
         name=DEFAULT_CHANNEL_INFO_NAME,
         url=DEFAULT_CHANNEL_INFO_URL,
         directory=DEFAULT_CHANNEL_INFO_DIRECTORY)
 
 
-def podcast_data_factory(audio_link=None):
+def podcast_data_factory(
+        audio_link: typing.Optional[typing.Dict[str, str]]=None
+) -> PodcastData:
     if audio_link is None:
         audio_link = PODCAST_DATA_AUDIO_LINK
     return PodcastData(
@@ -40,49 +49,49 @@ def podcast_data_factory(audio_link=None):
     )
 
 
-def unmerged_podcast_factory():
+def unmerged_podcast_factory() -> Podcast:
     return Podcast(
         status=UnmergedStatus(),
         data=podcast_data_factory())
 
 
-def requested_podcast_factory():
+def requested_podcast_factory() -> Podcast:
     return Podcast(
         status=RequestedStatus(),
         data=podcast_data_factory())
 
 
-def cancelled_podcast_factory():
+def cancelled_podcast_factory() -> Podcast:
     return Podcast(
         status=CancelledStatus(),
         data=podcast_data_factory())
 
 
-def new_podcast_factory():
+def new_podcast_factory() -> Podcast:
     return Podcast(
         status=NewStatus(location=DEFAULT_PODCAST_LOCATION),
         data=podcast_data_factory())
 
 
-def started_podcast_factory():
+def started_podcast_factory() -> Podcast:
     return Podcast(
         status=StartedStatus(location=DEFAULT_PODCAST_LOCATION),
         data=podcast_data_factory())
 
 
-def finished_podcast_factory():
+def finished_podcast_factory() -> Podcast:
     return Podcast(
         status=FinishedStatus(location=DEFAULT_PODCAST_LOCATION),
         data=podcast_data_factory())
 
 
-def deleted_podcast_factory():
+def deleted_podcast_factory() -> Podcast:
     return Podcast(
         status=DeletedStatus(),
         data=podcast_data_factory())
 
 
-def known_podcasts_factory():
+def known_podcasts_factory() -> typing.List[Podcast]:
     return [
         unmerged_podcast_factory(),
         requested_podcast_factory(),
@@ -94,7 +103,9 @@ def known_podcasts_factory():
     ]
 
 
-def channel_factory(known_podcasts=None):
+def channel_factory(
+        known_podcasts: typing.Optional[typing.List[Podcast]]=None
+) -> Channel:
     if known_podcasts is None:
         known_podcasts = known_podcasts_factory()
 
