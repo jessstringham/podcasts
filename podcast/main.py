@@ -5,6 +5,7 @@ from collections import Counter
 
 from podcast.cache import save_radio
 from podcast.channel_config import load_channel_config
+from podcast.delete import delete_podcast
 from podcast.download import download_channel
 from podcast.models import Radio
 from podcast.models import RadioDirectory
@@ -52,21 +53,38 @@ def save(radio: Radio) -> None:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Loads podcasts.')
     parser.add_argument('command')
+
+    # TODO: these are required options, eeh
     parser.add_argument('--config')
     parser.add_argument('--directory')
+
+    parser.add_argument('--channel-id')
+    parser.add_argument('--podcast-id')
+
     args = parser.parse_args()
 
     print("Loading radio...")
 
     radio = load_radio(args.directory, args.config)
 
-    action = {
+    radio_action = {
         'status': print_status,
         'update': update_radio,
         'download': download_radio,
     }  # type: typing.Dict[str, typing.Callable[[Radio], Radio]]
 
-    radio = action[args.command](radio)
+    if args.command in radio_action:
+        radio = radio_action[args.command](radio)
+
+    podcast_action = {
+        'delete': delete_podcast,
+    }  # type: typing.Dict[str, typing.Callable[[Radio, str, str], Radio]]
+
+    if all([args.podcast_id,
+            args.channel_id,
+            args.command in podcast_action]):
+        radio = podcast_action[args.command](
+            radio, args.channel_id, args.podcast_id)
 
     print("Saving radio...")
     save(radio)

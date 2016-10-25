@@ -1,11 +1,11 @@
 import os
 import urllib.error
 import urllib.request
-from urllib.parse import urlparse
 
 from podcast.models import Channel
 from podcast.models import get_channel_label
 from podcast.models import get_podcast_audio_link
+from podcast.models import get_podcast_url
 from podcast.models import NewStatus
 from podcast.models import Podcast
 from podcast.models import RadioDirectory
@@ -19,7 +19,7 @@ def _download_location(
     return os.path.join(
         directory,
         channel.channel_info.directory,
-        urlparse(get_podcast_audio_link(podcast)).path.split('/')[-1])
+        get_podcast_url(podcast))
 
 
 def _download_from_url(url: str, location: str) -> bool:

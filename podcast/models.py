@@ -1,6 +1,6 @@
 import typing
 from collections import namedtuple
-
+from urllib.parse import urlparse
 
 PodcastData = typing.NamedTuple('PodcastData', [
     ('title', str),  # title
@@ -33,8 +33,23 @@ Podcast = typing.NamedTuple('Podcast', [
     ])])
 
 
+def get_podcast_file_location(podcast: Podcast) -> typing.Optional[str]:
+    return getattr(podcast.status, 'location', None)
+
+
 def get_podcast_audio_link(podcast: Podcast) -> str:
     return podcast.data.audio_link['href']
+
+
+def get_podcast_url(podcast: Podcast) -> str:
+    return urlparse(get_podcast_audio_link(podcast)).path.split('/')[-1]
+
+# NOTE: This seems like something I'll probably regret
+
+
+def get_podcast_id(podcast: Podcast) -> str:
+    return '.'.join(get_podcast_url(podcast).split('.')[:-1])
+
 
 ChannelInfo = namedtuple('ChannelInfo', 'name url directory')
 
