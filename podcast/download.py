@@ -1,4 +1,5 @@
 import os
+import urllib.error
 import urllib.request
 from urllib.parse import urlparse
 
@@ -24,7 +25,7 @@ def _download_from_url(url: str, location: str) -> bool:
         # requesting it), or internet connectivity (and should tell
         # us), or just a fluke (and should retry)?
         return False
-    except urllib.request.error.ContentTooShortError:
+    except urllib.error.ContentTooShortError:
         # If the download gets interrupted, we should try again later
         return False
 
