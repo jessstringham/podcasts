@@ -1,3 +1,5 @@
+from util.factory import channel_factory
+from util.factory import DEFAULT_CHANNEL_INFO_DIRECTORY
 from util.factory import podcast_data_factory
 
 from podcast.download import _download_location
@@ -17,5 +19,13 @@ def test_download_location():
                 'rel': u'enclosure',
             }))
 
-    assert _download_location(RadioDirectory(
-        'dir'), podcast_data) == 'dir/597.mp3'
+    channel = channel_factory()
+
+    actual = _download_location(
+        RadioDirectory('dir'),
+        channel,
+        podcast_data)
+
+    expected = 'dir/{0}/597.mp3'.format(DEFAULT_CHANNEL_INFO_DIRECTORY)
+
+    assert actual == expected

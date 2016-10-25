@@ -56,15 +56,19 @@ if __name__ == '__main__':
     parser.add_argument('--directory')
     args = parser.parse_args()
 
+    print("Loading radio...")
+
     radio = load_radio(args.directory, args.config)
 
     action = {
-        'download': download_radio,
+        'status': print_status,
         'update': update_radio,
-        'status': print_status
+        'download': download_radio,
     }  # type: typing.Dict[str, typing.Callable[[Radio], Radio]]
 
-    maybe_radio = action[args.command](radio)
+    radio = action[args.command](radio)
 
-    if maybe_radio:
-        save(maybe_radio)
+    print("Saving radio...")
+    save(radio)
+
+    print("Done. Goodbye.")

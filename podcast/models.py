@@ -32,11 +32,19 @@ Podcast = typing.NamedTuple('Podcast', [
         DeletedStatus,
     ])])
 
+
+def get_podcast_audio_link(podcast: Podcast) -> str:
+    return podcast.data.audio_link['href']
+
 ChannelInfo = namedtuple('ChannelInfo', 'name url directory')
 
 Channel = typing.NamedTuple('Channel', [
     ('channel_info', ChannelInfo),
     ('known_podcasts', typing.List[Podcast])])
+
+
+def get_channel_label(channel: Channel) -> str:
+    return channel.channel_info.name
 
 RadioDirectory = typing.NewType('RadioDirectory', str)
 

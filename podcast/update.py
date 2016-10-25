@@ -2,6 +2,7 @@ import typing
 
 from podcast.feeds import unmerged_podcasts_from_feed
 from podcast.models import Channel
+from podcast.models import get_channel_label
 from podcast.models import Podcast
 from podcast.models import RequestedStatus
 
@@ -31,6 +32,7 @@ def merge_podcasts(
 
 
 def update_channel(channel: Channel) -> Channel:
+    print('updating channel: ', get_channel_label(channel))
     unmerged_podcasts = unmerged_podcasts_from_feed(channel)
 
     return channel._replace(
