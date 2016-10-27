@@ -8,6 +8,8 @@ from podcast.models import FinishedStatus
 from podcast.models import NewStatus
 from podcast.models import Podcast
 from podcast.models import PodcastData
+from podcast.models import Radio
+from podcast.models import RadioDirectory
 from podcast.models import RequestedStatus
 from podcast.models import StartedStatus
 from podcast.models import UnmergedStatus
@@ -112,3 +114,10 @@ def channel_factory(
     return Channel(
         channel_info=channel_info_factory(),
         known_podcasts=known_podcasts)
+
+
+def radio_factory(directory: RadioDirectory):
+    return Radio(
+        channels=[channel_factory()],
+        directory=directory,
+    )

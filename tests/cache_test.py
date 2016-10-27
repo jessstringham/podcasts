@@ -2,9 +2,11 @@ import tempfile
 
 from util.factory import channel_factory
 from util.factory import channel_info_factory
+from util.factory import radio_factory
 
 from podcast.cache import load_known_podcasts
 from podcast.cache import save_known_podcasts
+from podcast.cache import save_radio
 from podcast.models import RadioDirectory
 
 
@@ -36,3 +38,9 @@ def test_smoke():
     # Now, check that loading the channel gives us the expected results
 
     assert result == channel.known_podcasts
+
+
+def test_radio():
+    with tempfile.TemporaryDirectory() as tmpdirname:
+        radio = radio_factory(RadioDirectory(tmpdirname))
+        save_radio(radio)
