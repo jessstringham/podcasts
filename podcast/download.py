@@ -1,25 +1,13 @@
-import os
 import urllib.error
 import urllib.request
 
+from podcast.files import download_location
 from podcast.models import Channel
 from podcast.models import get_channel_label
 from podcast.models import get_podcast_audio_link
-from podcast.models import get_podcast_url
 from podcast.models import NewStatus
 from podcast.models import Podcast
 from podcast.models import RadioDirectory
-
-
-def _download_location(
-        directory: RadioDirectory,
-        channel: Channel,
-        podcast: Podcast
-) -> str:
-    return os.path.join(
-        directory,
-        channel.channel_info.directory,
-        get_podcast_url(podcast))
 
 
 def _download_from_url(url: str, location: str) -> bool:
@@ -42,10 +30,8 @@ def download_podcast(
         directory: RadioDirectory,
         channel: Channel,
         podcast: Podcast) -> Podcast:
-    location = _download_location(directory, channel, podcast)
+    location = download_location(directory, channel, podcast)
     url = get_podcast_audio_link(podcast)
-
-    print("Downloading {0} to {1}".format(url, location))
 
     # TODO: This takes some time, especially when there are a lot to
     # download. I could have this spawn threads, or add priorities,
@@ -55,7 +41,7 @@ def download_podcast(
     success = _download_from_url(url, location)
 
     if success:
-        return podcast._replace(status=NewStatus(location=location))
+        return podcast._replace(status=NewStatus())
     else:
         return podcast
 

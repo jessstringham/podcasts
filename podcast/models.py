@@ -15,9 +15,9 @@ PodcastData = typing.NamedTuple('PodcastData', [
 UnmergedStatus = typing.NamedTuple('UnmergedStatus', [])
 RequestedStatus = typing.NamedTuple('RequestedStatus', [])
 CancelledStatus = typing.NamedTuple('CancelledStatus', [])
-NewStatus = typing.NamedTuple('NewStatus', [('location', str)])
-StartedStatus = typing.NamedTuple('StartedStatus', [('location', str)])
-FinishedStatus = typing.NamedTuple('FinishedStatus', [('location', str)])
+NewStatus = typing.NamedTuple('NewStatus', [])
+StartedStatus = typing.NamedTuple('StartedStatus', [])
+FinishedStatus = typing.NamedTuple('FinishedStatus', [])
 DeletedStatus = typing.NamedTuple('DeletedStatus', [])
 
 Podcast = typing.NamedTuple('Podcast', [

@@ -23,12 +23,10 @@ PODCAST_DATA_SUBTITLE = 'subtitle'
 PODCAST_DATA_PUBLISHED = 123.0
 PODCAST_DATA_AUDIO_LINK = {
     'length': u'0',
-    'href': u'http://google.com',
+    'href': u'http://jessicastringham.com/something.mp3',
     'type': u'audio/mpeg',
     'rel': u'enclosure',
 }
-
-DEFAULT_PODCAST_LOCATION = 'location'
 
 
 def channel_info_factory() -> ChannelInfo:
@@ -71,19 +69,19 @@ def cancelled_podcast_factory() -> Podcast:
 
 def new_podcast_factory() -> Podcast:
     return Podcast(
-        status=NewStatus(location=DEFAULT_PODCAST_LOCATION),
+        status=NewStatus(),
         data=podcast_data_factory())
 
 
 def started_podcast_factory() -> Podcast:
     return Podcast(
-        status=StartedStatus(location=DEFAULT_PODCAST_LOCATION),
+        status=StartedStatus(),
         data=podcast_data_factory())
 
 
 def finished_podcast_factory() -> Podcast:
     return Podcast(
-        status=FinishedStatus(location=DEFAULT_PODCAST_LOCATION),
+        status=FinishedStatus(),
         data=podcast_data_factory())
 
 

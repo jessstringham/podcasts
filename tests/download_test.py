@@ -2,7 +2,7 @@ from util.factory import channel_factory
 from util.factory import DEFAULT_CHANNEL_INFO_DIRECTORY
 from util.factory import podcast_data_factory
 
-from podcast.download import _download_location
+from podcast.files import download_location
 from podcast.models import Podcast
 from podcast.models import RadioDirectory
 from podcast.models import RequestedStatus
@@ -21,7 +21,7 @@ def test_download_location():
 
     channel = channel_factory()
 
-    actual = _download_location(
+    actual = download_location(
         RadioDirectory('dir'),
         channel,
         podcast_data)
