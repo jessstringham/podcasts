@@ -1,6 +1,8 @@
 PyYAML==3.11
 feedparser==5.2.1
+mock
 mypy-lang
 pre-commit
 pytest
+pytest-cov
 simplejson

@@ -10,7 +10,7 @@ test: venv
 	$(PREFIX)/pre-commit run --all-files
 
 pytest: venv
-	$(PREFIX)/python -m pytest tests -s
+	$(PREFIX)/python -m pytest tests -s --cov=podcast --cov-report term-missing
 
 check_types: venv
 	MYPYPATH=podcast $(PREFIX)/mypy podcast --disallow-untyped-defs
