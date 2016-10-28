@@ -114,8 +114,13 @@ def channel_factory(
         known_podcasts=known_podcasts)
 
 
-def radio_factory(directory: RadioDirectory):
+def radio_factory(
+        directory: RadioDirectory,
+        channels: typing.List[Channel]=None):
+    if channels is None:
+        channels = [channel_factory()]
+
     return Radio(
-        channels=[channel_factory()],
         directory=directory,
+        channels=channels,
     )

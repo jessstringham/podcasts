@@ -5,6 +5,7 @@ from podcast.files import download_location
 from podcast.files import trash_location
 from podcast.models import Channel
 from podcast.models import DeletedStatus
+from podcast.models import get_channel_id
 from podcast.models import get_podcast_id
 from podcast.models import Podcast
 from podcast.models import Radio
@@ -56,7 +57,7 @@ def delete_podcast_from_channel(
 def delete_podcast(radio: Radio, channel_id: str, podcast_id: str) -> Radio:
     updated_channels = []
     for channel in radio.channels:
-        if channel.channel_info.directory == channel_id:
+        if get_channel_id(channel) == channel_id:
             channel = channel._replace(
                 known_podcasts=delete_podcast_from_channel(
                     radio.directory,

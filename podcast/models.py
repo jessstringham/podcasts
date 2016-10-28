@@ -2,6 +2,7 @@ import typing
 from collections import namedtuple
 from urllib.parse import urlparse
 
+
 PodcastData = typing.NamedTuple('PodcastData', [
     ('title', str),  # title
     ('subtitle', str),  # subtitle
@@ -56,6 +57,10 @@ ChannelInfo = namedtuple('ChannelInfo', 'name url directory')
 Channel = typing.NamedTuple('Channel', [
     ('channel_info', ChannelInfo),
     ('known_podcasts', typing.List[Podcast])])
+
+
+def get_channel_id(channel: Channel) -> str:
+    return channel.channel_info.directory
 
 
 def get_channel_label(channel: Channel) -> str:
