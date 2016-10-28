@@ -115,10 +115,13 @@ def channel_factory(
 
 
 def radio_factory(
-        directory: RadioDirectory,
+        directory: RadioDirectory=None,
         channels: typing.List[Channel]=None):
     if channels is None:
         channels = [channel_factory()]
+
+    if directory is None:
+        directory = RadioDirectory('tmp')
 
     return Radio(
         directory=directory,

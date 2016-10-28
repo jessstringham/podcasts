@@ -34,10 +34,6 @@ Podcast = typing.NamedTuple('Podcast', [
     ])])
 
 
-def get_podcast_file_location(podcast: Podcast) -> typing.Optional[str]:
-    return getattr(podcast.status, 'location', None)
-
-
 def get_podcast_audio_link(podcast: Podcast) -> str:
     return podcast.data.audio_link['href']
 
@@ -62,9 +58,6 @@ Channel = typing.NamedTuple('Channel', [
 def get_channel_id(channel: Channel) -> str:
     return channel.channel_info.directory
 
-
-def get_channel_label(channel: Channel) -> str:
-    return channel.channel_info.name
 
 RadioDirectory = typing.NewType('RadioDirectory', str)
 

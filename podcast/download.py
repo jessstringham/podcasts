@@ -3,7 +3,6 @@ import urllib.request
 
 from podcast.files import download_location
 from podcast.models import Channel
-from podcast.models import get_channel_label
 from podcast.models import get_podcast_audio_link
 from podcast.models import NewStatus
 from podcast.models import Podcast
@@ -14,15 +13,14 @@ def _download_from_url(url: str, location: str) -> bool:
     try:
         urllib.request.urlretrieve(url, location)
         return True
-    except IOError:
+    except (IOError, urllib.error.ContentTooShortError):
         # If a connection can't be made, IOError is raised
+        # If the download gets interrupted (ContentTooShortError), we
+        # should try again later
 
         # TODO: can we tell if it was a bad filename (and should stop
         # requesting it), or internet connectivity (and should tell
         # us), or just a fluke (and should retry)?
-        return False
-    except urllib.error.ContentTooShortError:
-        # If the download gets interrupted, we should try again later
         return False
 
 
@@ -47,8 +45,6 @@ def download_podcast(
 
 
 def download_channel(directory: RadioDirectory, channel: Channel) -> Channel:
-    print("Downloading: {0}".format(get_channel_label(channel)))
-
     updated_podcasts = []
     for known_podcast in channel.known_podcasts:
         if type(known_podcast.status).__name__ == 'RequestedStatus':
