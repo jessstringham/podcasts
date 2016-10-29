@@ -1,0 +1,3 @@
+import typing
+
+def raises(*args : typing.Any, **kwargs : typing.Any) -> typing.Any: ...

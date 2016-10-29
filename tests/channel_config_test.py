@@ -1,9 +1,52 @@
+import typing  # noqa
+
+import pytest
+from jsonschema.exceptions import ValidationError
+
 import podcast.cache
+from podcast.channel_config import _validate_config
 from podcast.channel_config import load_channel_config
 from podcast.channel_config import parse_channel_info
 from podcast.models import Channel
 from podcast.models import ChannelInfo
 from podcast.models import RadioDirectory
+
+
+def test_invalid_config_wrong_type():
+    data = 1
+    with pytest.raises(ValidationError):
+        _validate_config(data)
+
+
+def test_invalid_config_wrong_content_type():
+    data = [1]
+    with pytest.raises(ValidationError):
+        _validate_config(data)
+
+
+def test_invalid_config_missing_field():
+    data = [{}]  # type: typing.Any
+    with pytest.raises(ValidationError):
+        _validate_config(data)
+
+
+def test_invalid_config_field_wrong_type():
+    data = [{'name': 1, 'url': '2', 'directory': '3'}]
+    with pytest.raises(ValidationError):
+        _validate_config(data)
+
+
+def test_valid_config():
+    data = [{
+        'name': '1',
+        'url': '2',
+        'directory': '3',
+    }, {
+        'name': '2',
+        'url': '3',
+        'directory': '4',
+    }]
+    _validate_config(data)
 
 
 def test_parse_channel_info():
