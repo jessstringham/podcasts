@@ -17,7 +17,7 @@ check_types: venv
 	MYPYPATH=podcast:tests $(PREFIX)/mypy tests --check-untyped-defs
 
 venv-init:
-	virtualenv venv -p python3.5
+	virtualenv venv -p python3
 
 venv: requirements.txt
 	$(PREFIX)/pip install -r requirements.txt

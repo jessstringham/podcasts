@@ -21,8 +21,8 @@ def main() -> None:
     parser.add_argument('command')
 
     # TODO: these are required options, eeh
-    parser.add_argument('--config')
-    parser.add_argument('--directory')
+    parser.add_argument('--config', required=True)
+    parser.add_argument('--directory', required=True)
 
     parser.add_argument('--channel-id')
     parser.add_argument('--podcast-id')
