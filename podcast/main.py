@@ -10,6 +10,7 @@ from podcast.info import InfoContent  # noqa
 from podcast.info import output_info
 from podcast.models import Radio  # noqa
 from podcast.recent import recent_podcast_from_channel
+from podcast.status import has_new_podcast_from_channel
 from podcast.status import print_status
 from podcast.update import update_radio
 
@@ -37,6 +38,7 @@ def main() -> None:
 
     channel_action = {
         'recent': recent_podcast_from_channel,
+        'has_new': has_new_podcast_from_channel,
     }  # type: typing.Dict[str, typing.Callable[[Radio, str], typing.Tuple[Radio, InfoContent]]]  # noqa
 
     podcast_action = {
