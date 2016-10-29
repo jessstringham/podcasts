@@ -3,6 +3,8 @@ import typing
 
 import simplejson
 
+
+# TODO: add better schemas here
 InfoContent = typing.NewType('InfoContent', dict)
 
 Info = typing.NamedTuple('Info', [
