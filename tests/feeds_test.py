@@ -29,31 +29,7 @@ EXPECTED_FROM_TEST_FEED = [
                 'length': u'0',
                 'href': u'http://feed.thisamericanlife.org/~r/talpodcast/~5/CvhnShvDtl8/598.mp3',  # noqa
                 'type': u'audio/mpeg',
-                'rel': u'enclosure'})),
-    Podcast(
-        status=UnmergedStatus(),
-        data=PodcastData(
-            title=u'#560: Abdi and the Golden Ticket',
-            subtitle=u"A story about someone who's desperately trying \u2013 against long odds \u2013 to make it to the United States and become an American. Abdi is a Somali refugee living in Kenya and gets the luckiest break of his life: he wins a lottery that puts him on a short list",  # noqa
-            published=1475481600.0,
-            audio_link={
-                'length': u'0',
-                'href': u'http://feed.thisamericanlife.org/~r/talpodcast/~5/L0ikzBuLkOM/560.mp3',  # noqa
-                'type': u'audio/mpeg',
-                'rel': u'enclosure'
-            })),
-    Podcast(
-        status=UnmergedStatus(),
-        data=PodcastData(
-            title=u'#597: One Last Thing Before I Go',
-            subtitle=u'Words can seem so puny and ineffective sometimes. On this show, we have stories in which ordinary people make last ditch efforts to get through to their loved ones, using a combination of small talk and not-so-small talk.',  # noqa
-            published=1474876800.0,
-            audio_link={
-                'length': u'0',
-                'href': u'http://feed.thisamericanlife.org/~r/talpodcast/~5/R0qvREKxypU/597.mp3',  # noqa
-                'type': u'audio/mpeg',
-                'rel': u'enclosure'
-            }))]
+                'rel': u'enclosure'}))]
 
 
 def test_smoke(monkeypatch):
@@ -67,5 +43,5 @@ def test_smoke(monkeypatch):
     monkeypatch.setattr(podcast.feeds, '_podcasts_from_feed',
                         mock_podcast_from_feed)
 
-    actual = unmerged_podcasts_from_feed(channel)
+    actual = unmerged_podcasts_from_feed(channel, 2)
     assert actual == EXPECTED_FROM_TEST_FEED

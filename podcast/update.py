@@ -7,6 +7,9 @@ from podcast.models import Podcast
 from podcast.models import Radio
 from podcast.models import RequestedStatus
 
+# TODO: move to a config file
+RECENT_PODCAST_LIMIT = 5
+
 
 def _uniquer(unmerged_podcast: Podcast) -> str:
     return unmerged_podcast.data.audio_link['href']
@@ -33,7 +36,8 @@ def merge_podcasts(
 
 
 def update_channel(channel: Channel) -> Channel:
-    unmerged_podcasts = unmerged_podcasts_from_feed(channel)
+    unmerged_podcasts = unmerged_podcasts_from_feed(
+        channel, RECENT_PODCAST_LIMIT)
 
     return channel._replace(
         known_podcasts=merge_podcasts(channel, unmerged_podcasts))

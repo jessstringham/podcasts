@@ -23,9 +23,12 @@ def _podcasts_from_feed(
     return feedparser.parse(url_or_stream)['entries']
 
 
-def unmerged_podcasts_from_feed(channel: Channel) -> typing.List[Podcast]:
+def unmerged_podcasts_from_feed(
+        channel: Channel,
+        limit: int
+) -> typing.List[Podcast]:
     feed = _podcasts_from_feed(channel.channel_info.url)
-    return [
+    podcasts = [
         Podcast(
             data=PodcastData(
                 title=item['title'],
@@ -34,3 +37,8 @@ def unmerged_podcasts_from_feed(channel: Channel) -> typing.List[Podcast]:
                 audio_link=_find_mp3_link_in_feed_item_links(item['links'])),
             status=UnmergedStatus())
         for item in feed]
+
+    return sorted(
+        podcasts,
+        key=lambda p: p.data.published,
+        reverse=True)[:limit]

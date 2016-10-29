@@ -13,7 +13,7 @@ from podcast.status import print_status
 from podcast.update import update_radio
 
 
-if __name__ == '__main__':
+def main() -> None:
     parser = argparse.ArgumentParser(description='Loads podcasts.')
     parser.add_argument('command')
 
@@ -46,8 +46,10 @@ if __name__ == '__main__':
         radio, info_content = podcast_action[args.command](
             radio, args.channel_id, args.podcast_id)
 
-    info = build_info(args, info_content)
-
     save_radio(radio)
 
+    info = build_info(args, info_content)
     print(output_info(info))
+
+if __name__ == '__main__':
+    main()
