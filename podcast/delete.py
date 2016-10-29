@@ -8,12 +8,14 @@ from podcast.models import Channel
 from podcast.models import DeletedStatus
 from podcast.models import get_channel_id
 from podcast.models import get_podcast_id
+from podcast.models import map_channel_podcasts
+from podcast.models import map_radio_channels
 from podcast.models import Podcast
 from podcast.models import Radio
 from podcast.models import RadioDirectory
 
 
-def _delete_podcast(
+def _delete_podcast_file(
         directory: RadioDirectory,
         channel: Channel,
         podcast: Podcast,
@@ -39,37 +41,28 @@ def _delete_podcast(
     return False
 
 
-def delete_podcast_from_channel(
-        directory: RadioDirectory,
-        channel: Channel,
-        podcast_id: str
-) -> typing.List[Podcast]:
-
-    updated_podcasts = []
-    for podcast in channel.known_podcasts:
-        if get_podcast_id(podcast) == podcast_id:
-            _delete_podcast(directory, channel, podcast)
-            podcast = podcast._replace(status=DeletedStatus())
-        updated_podcasts.append(podcast)
-
-    return updated_podcasts
-
-
 def delete_podcast(
         radio: Radio,
         channel_id: str,
         podcast_id: str
 ) -> typing.Tuple[Radio, InfoContent]:
-    updated_channels = []
-    for channel in radio.channels:
+
+    def apply_delete_on_right_podcast(
+            channel: Channel,
+            podcast: Podcast
+    ) -> Podcast:
+        if get_podcast_id(podcast) == podcast_id:
+            _delete_podcast_file(radio.directory, channel, podcast)
+            podcast = podcast._replace(status=DeletedStatus())
+        return podcast
+
+    def apply_delete_on_right_channel(channel: Channel) -> Channel:
         if get_channel_id(channel) == channel_id:
-            channel = channel._replace(
-                known_podcasts=delete_podcast_from_channel(
-                    radio.directory,
-                    channel,
-                    podcast_id))
-        updated_channels.append(channel)
+            channel = map_channel_podcasts(
+                channel,
+                apply_delete_on_right_podcast)
+        return channel
 
-    radio = radio._replace(channels=updated_channels)
+    radio = map_radio_channels(radio, apply_delete_on_right_channel)
 
-    return (radio, InfoContent({}))
+    return radio, InfoContent({})

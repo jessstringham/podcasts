@@ -59,9 +59,31 @@ def get_channel_id(channel: Channel) -> str:
     return channel.channel_info.directory
 
 
+def map_channel_podcasts(
+        channel: Channel,
+        map_f: typing.Callable[[Channel, Podcast], Podcast],
+) -> Channel:
+
+    return channel._replace(
+        known_podcasts=[
+            map_f(channel, podcast)
+            for podcast in channel.known_podcasts])
+
+
 RadioDirectory = typing.NewType('RadioDirectory', str)
 
 
 Radio = typing.NamedTuple('Radio', [
     ('channels', typing.List[Channel]),
     ('directory', RadioDirectory)])
+
+
+def map_radio_channels(
+        radio: Radio,
+        map_f: typing.Callable[[Channel], Channel],
+) -> Radio:
+
+    return radio._replace(
+        channels=[
+            map_f(channel)
+            for channel in radio.channels])
