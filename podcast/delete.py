@@ -7,6 +7,7 @@ from podcast.models import Channel
 from podcast.models import DeletedStatus
 from podcast.models import get_channel_id
 from podcast.models import get_podcast_id
+from podcast.models import InfoContent
 from podcast.models import Podcast
 from podcast.models import Radio
 from podcast.models import RadioDirectory
@@ -54,7 +55,11 @@ def delete_podcast_from_channel(
     return updated_podcasts
 
 
-def delete_podcast(radio: Radio, channel_id: str, podcast_id: str) -> Radio:
+def delete_podcast(
+        radio: Radio,
+        channel_id: str,
+        podcast_id: str
+) -> typing.Tuple[Radio, InfoContent]:
     updated_channels = []
     for channel in radio.channels:
         if get_channel_id(channel) == channel_id:
@@ -65,4 +70,6 @@ def delete_podcast(radio: Radio, channel_id: str, podcast_id: str) -> Radio:
                     podcast_id))
         updated_channels.append(channel)
 
-    return radio._replace(channels=updated_channels)
+    radio = radio._replace(channels=updated_channels)
+
+    return (radio, InfoContent({}))

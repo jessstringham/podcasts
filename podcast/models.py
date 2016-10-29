@@ -1,6 +1,9 @@
+import time
 import typing
 from collections import namedtuple
 from urllib.parse import urlparse
+
+import simplejson
 
 
 PodcastData = typing.NamedTuple('PodcastData', [
@@ -65,3 +68,30 @@ RadioDirectory = typing.NewType('RadioDirectory', str)
 Radio = typing.NamedTuple('Radio', [
     ('channels', typing.List[Channel]),
     ('directory', RadioDirectory)])
+
+InfoContent = typing.NewType('InfoContent', dict)
+
+Info = typing.NamedTuple('Info', [
+    ('timestamp', int),
+    ('command', str),
+    ('directory', str),
+    ('config_file', str),
+    ('content', InfoContent)])
+
+
+def blank_info(
+        command: str,
+        directory: str,
+        config: str
+) -> Info:
+    return Info(
+        timestamp=time.time(),
+        command=command,
+        directory=directory,
+        config_file=config,
+        content=InfoContent({'error': 'no content'}),
+    )
+
+
+def output_info(info: Info) -> str:
+    return simplejson.dumps(info._asdict())
