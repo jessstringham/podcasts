@@ -5,9 +5,9 @@ from podcast.cache import save_radio
 from podcast.channel_config import load_radio
 from podcast.delete import delete_podcast
 from podcast.download import download_radio
-from podcast.models import blank_info
-from podcast.models import InfoContent  # noqa
-from podcast.models import output_info
+from podcast.info import blank_info
+from podcast.info import InfoContent  # noqa
+from podcast.info import output_info
 from podcast.models import Radio  # noqa
 from podcast.status import print_status
 from podcast.update import update_radio

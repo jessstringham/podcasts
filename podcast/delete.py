@@ -3,11 +3,11 @@ import typing
 
 from podcast.files import download_location
 from podcast.files import trash_location
+from podcast.info import InfoContent
 from podcast.models import Channel
 from podcast.models import DeletedStatus
 from podcast.models import get_channel_id
 from podcast.models import get_podcast_id
-from podcast.models import InfoContent
 from podcast.models import Podcast
 from podcast.models import Radio
 from podcast.models import RadioDirectory

@@ -3,9 +3,9 @@ import urllib.error
 import urllib.request
 
 from podcast.files import download_location
+from podcast.info import InfoContent
 from podcast.models import Channel
 from podcast.models import get_podcast_audio_link
-from podcast.models import InfoContent
 from podcast.models import NewStatus
 from podcast.models import Podcast
 from podcast.models import Radio

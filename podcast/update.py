@@ -1,8 +1,8 @@
 import typing
 
 from podcast.feeds import unmerged_podcasts_from_feed
+from podcast.info import InfoContent
 from podcast.models import Channel
-from podcast.models import InfoContent
 from podcast.models import Podcast
 from podcast.models import Radio
 from podcast.models import RequestedStatus

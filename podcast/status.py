@@ -1,7 +1,7 @@
 import typing
 from collections import Counter
 
-from podcast.models import InfoContent
+from podcast.info import InfoContent
 from podcast.models import Radio
 
 
