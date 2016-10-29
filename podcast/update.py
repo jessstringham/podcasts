@@ -2,7 +2,9 @@ import typing
 
 from podcast.feeds import unmerged_podcasts_from_feed
 from podcast.models import Channel
+from podcast.models import InfoContent
 from podcast.models import Podcast
+from podcast.models import Radio
 from podcast.models import RequestedStatus
 
 
@@ -35,3 +37,15 @@ def update_channel(channel: Channel) -> Channel:
 
     return channel._replace(
         known_podcasts=merge_podcasts(channel, unmerged_podcasts))
+
+
+def update_radio(radio: Radio) -> typing.Tuple[Radio, InfoContent]:
+    updated_channels = [
+        update_channel(channel)
+        for channel in radio.channels
+    ]
+
+    radio = radio._replace(channels=updated_channels)
+    info_content = InfoContent({})
+
+    return (radio, info_content)

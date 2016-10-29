@@ -72,25 +72,20 @@ Radio = typing.NamedTuple('Radio', [
 InfoContent = typing.NewType('InfoContent', dict)
 
 Info = typing.NamedTuple('Info', [
-    ('timestamp', int),
+    ('timestamp', float),
     ('command', str),
     ('directory', str),
     ('config_file', str),
     ('content', InfoContent)])
 
 
-def blank_info(
-        command: str,
-        directory: str,
-        config: str
-) -> Info:
+def blank_info(args: typing.Any) -> Info:
     return Info(
         timestamp=time.time(),
-        command=command,
-        directory=directory,
-        config_file=config,
-        content=InfoContent({'error': 'no content'}),
-    )
+        command=args.command,
+        directory=args.directory,
+        config_file=args.config,
+        content=InfoContent({'error': 'no content'}))
 
 
 def output_info(info: Info) -> str:

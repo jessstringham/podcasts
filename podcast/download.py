@@ -1,11 +1,14 @@
+import typing
 import urllib.error
 import urllib.request
 
 from podcast.files import download_location
 from podcast.models import Channel
 from podcast.models import get_podcast_audio_link
+from podcast.models import InfoContent
 from podcast.models import NewStatus
 from podcast.models import Podcast
+from podcast.models import Radio
 from podcast.models import RadioDirectory
 
 
@@ -52,3 +55,15 @@ def download_channel(directory: RadioDirectory, channel: Channel) -> Channel:
         updated_podcasts.append(known_podcast)
 
     return channel._replace(known_podcasts=updated_podcasts)
+
+
+def download_radio(radio: Radio) -> typing.Tuple[Radio, InfoContent]:
+    downloaded_channels = [
+        download_channel(radio.directory, channel)
+        for channel in radio.channels
+    ]
+
+    radio = radio._replace(channels=downloaded_channels)
+    info_content = InfoContent({})
+
+    return (radio, info_content)

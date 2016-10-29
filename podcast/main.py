@@ -1,66 +1,16 @@
 import argparse
-import typing
-from collections import Counter
+import typing  # noqa
 
 from podcast.cache import save_radio
-from podcast.channel_config import load_channel_config
+from podcast.channel_config import load_radio
 from podcast.delete import delete_podcast
-from podcast.download import download_channel
+from podcast.download import download_radio
 from podcast.models import blank_info
-from podcast.models import Info  # noqa
-from podcast.models import InfoContent
+from podcast.models import InfoContent  # noqa
 from podcast.models import output_info
-from podcast.models import Radio
-from podcast.models import RadioDirectory
-from podcast.update import update_channel
-
-
-def print_status(radio: Radio) -> typing.Tuple[Radio, InfoContent]:
-    status = InfoContent(dict(Counter(
-        '{0} -- {1}'.format(channel.channel_info.name,
-                            type(podcast.status).__name__)
-        for channel in radio.channels
-        for podcast in channel.known_podcasts)))
-
-    return radio, status
-
-
-def load_radio(
-        directory: RadioDirectory,
-        config: str
-) -> Radio:
-
-    return Radio(
-        channels=load_channel_config(directory, config),
-        directory=RadioDirectory(directory))
-
-
-def update_radio(radio: Radio) -> typing.Tuple[Radio, InfoContent]:
-    updated_channels = [
-        update_channel(channel)
-        for channel in radio.channels
-    ]
-
-    radio = radio._replace(channels=updated_channels)
-    info_content = InfoContent({})
-
-    return (radio, info_content)
-
-
-def download_radio(radio: Radio) -> typing.Tuple[Radio, InfoContent]:
-    downloaded_channels = [
-        download_channel(radio.directory, channel)
-        for channel in radio.channels
-    ]
-
-    radio = radio._replace(channels=downloaded_channels)
-    info_content = InfoContent({})
-
-    return (radio, info_content)
-
-
-def save(radio: Radio) -> None:
-    save_radio(radio)
+from podcast.models import Radio  # noqa
+from podcast.status import print_status
+from podcast.update import update_radio
 
 
 if __name__ == '__main__':
@@ -76,7 +26,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    info = blank_info(args.command, args.directory, args.config)
+    info = blank_info(args)
 
     radio = load_radio(args.directory, args.config)
 
@@ -101,6 +51,6 @@ if __name__ == '__main__':
             radio, args.channel_id, args.podcast_id)
         info = info._replace(content=info_content)
 
-    save(radio)
+    save_radio(radio)
 
     print(output_info(info))

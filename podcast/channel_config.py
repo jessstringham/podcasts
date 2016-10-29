@@ -5,6 +5,7 @@ import yaml
 from podcast.cache import load_known_podcasts
 from podcast.models import Channel
 from podcast.models import ChannelInfo
+from podcast.models import Radio
 from podcast.models import RadioDirectory
 
 
@@ -33,3 +34,13 @@ def load_channel_config(
 
     return [load_channel(directory, channel_config)
             for channel_config in radio_config]
+
+
+def load_radio(
+        directory: RadioDirectory,
+        config: str
+) -> Radio:
+
+    return Radio(
+        channels=load_channel_config(directory, config),
+        directory=RadioDirectory(directory))
