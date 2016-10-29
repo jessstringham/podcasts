@@ -13,13 +13,13 @@ Info = typing.NamedTuple('Info', [
     ('content', InfoContent)])
 
 
-def blank_info(args: typing.Any) -> Info:
+def build_info(args: typing.Any, info_content: InfoContent) -> Info:
     return Info(
         timestamp=time.time(),
         command=args.command,
         directory=args.directory,
         config_file=args.config,
-        content=InfoContent({'error': 'no content'}))
+        content=info_content)
 
 
 def output_info(info: Info) -> str:

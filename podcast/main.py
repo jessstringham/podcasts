@@ -5,7 +5,7 @@ from podcast.cache import save_radio
 from podcast.channel_config import load_radio
 from podcast.delete import delete_podcast
 from podcast.download import download_radio
-from podcast.info import blank_info
+from podcast.info import build_info
 from podcast.info import InfoContent  # noqa
 from podcast.info import output_info
 from podcast.models import Radio  # noqa
@@ -26,8 +26,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    info = blank_info(args)
-
     radio = load_radio(args.directory, args.config)
 
     radio_action = {
@@ -36,20 +34,19 @@ if __name__ == '__main__':
         'download': download_radio,
     }  # type: typing.Dict[str, typing.Callable[[Radio], typing.Tuple[Radio, InfoContent]]]  # noqa
 
-    if args.command in radio_action:
-        radio, info_content = radio_action[args.command](radio)
-        info = info._replace(content=info_content)
-
     podcast_action = {
         'delete': delete_podcast,
     }  # type: typing.Dict[str, typing.Callable[[Radio, str, str], typing.Tuple[Radio, InfoContent]]]  # noqa
 
-    if all([args.podcast_id,
-            args.channel_id,
-            args.command in podcast_action]):
+    if args.command in radio_action:
+        radio, info_content = radio_action[args.command](radio)
+    elif all([args.podcast_id,
+              args.channel_id,
+              args.command in podcast_action]):
         radio, info_content = podcast_action[args.command](
             radio, args.channel_id, args.podcast_id)
-        info = info._replace(content=info_content)
+
+    info = build_info(args, info_content)
 
     save_radio(radio)
 
