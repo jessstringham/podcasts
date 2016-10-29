@@ -1,6 +1,7 @@
 import typing
 
 from podcast.feeds import unmerged_podcasts_from_feed
+from podcast.info import build_info_content
 from podcast.info import InfoContent
 from podcast.models import Channel
 from podcast.models import Podcast
@@ -50,6 +51,5 @@ def update_radio(radio: Radio) -> typing.Tuple[Radio, InfoContent]:
     ]
 
     radio = radio._replace(channels=updated_channels)
-    info_content = InfoContent({})
 
-    return (radio, info_content)
+    return (radio, build_info_content())

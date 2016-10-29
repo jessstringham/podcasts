@@ -3,6 +3,7 @@ import urllib.error
 import urllib.request
 
 from podcast.files import download_location
+from podcast.info import build_info_content
 from podcast.info import InfoContent
 from podcast.models import Channel
 from podcast.models import get_podcast_audio_link
@@ -64,6 +65,6 @@ def download_radio(radio: Radio) -> typing.Tuple[Radio, InfoContent]:
     ]
 
     radio = radio._replace(channels=downloaded_channels)
-    info_content = InfoContent({})
+    info_content = build_info_content()
 
     return (radio, info_content)

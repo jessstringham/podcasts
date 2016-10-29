@@ -87,3 +87,12 @@ def map_radio_channels(
         channels=[
             map_f(channel)
             for channel in radio.channels])
+
+
+def read_channel_from_id(
+        radio: Radio,
+        channel_id: str
+) -> typing.Optional[Channel]:
+    for channel in radio.channels:
+        if get_channel_id(channel) == channel_id:
+            return channel

@@ -5,7 +5,19 @@ import simplejson
 
 
 # TODO: add better schemas here
-InfoContent = typing.NewType('InfoContent', dict)
+InfoContent = typing.NamedTuple('Info', [
+    ('result', typing.Optional[typing.Any]),
+    ('error', typing.Optional[str]),
+])
+
+
+def build_info_content(
+        result: typing.Optional[typing.Any]=None,
+        error: typing.Optional[str]=None) -> InfoContent:
+    return InfoContent(
+        result=None,
+        error=None
+    )
 
 Info = typing.NamedTuple('Info', [
     ('timestamp', float),

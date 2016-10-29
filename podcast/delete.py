@@ -3,6 +3,7 @@ import typing
 
 from podcast.files import download_location
 from podcast.files import trash_location
+from podcast.info import build_info_content
 from podcast.info import InfoContent
 from podcast.models import Channel
 from podcast.models import DeletedStatus
@@ -65,4 +66,4 @@ def delete_podcast(
 
     radio = map_radio_channels(radio, apply_delete_on_right_channel)
 
-    return radio, InfoContent({})
+    return radio, build_info_content()  # TODO, add logging info

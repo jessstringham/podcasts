@@ -6,6 +6,7 @@ from podcast.channel_config import load_radio
 from podcast.delete import delete_podcast
 from podcast.download import download_radio
 from podcast.info import build_info
+from podcast.info import build_info_content
 from podcast.info import InfoContent  # noqa
 from podcast.info import output_info
 from podcast.models import Radio  # noqa
@@ -57,7 +58,7 @@ def main() -> None:
         radio, info_content = podcast_action[args.command](
             radio, args.channel_id, args.podcast_id)
     else:
-        info_content = InfoContent({'error': 'command not found'})
+        info_content = build_info_content(error='command not found')
 
     save_radio(radio)
 
