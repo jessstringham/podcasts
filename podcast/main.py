@@ -9,9 +9,9 @@ from podcast.info import build_info
 from podcast.info import InfoContent  # noqa
 from podcast.info import output_info
 from podcast.models import Radio  # noqa
-from podcast.recent import recent_podcast_from_channel
 from podcast.status import has_new_podcast_from_channel
 from podcast.status import print_status
+from podcast.status import recent_podcast_from_channel
 from podcast.update import update_radio
 
 
