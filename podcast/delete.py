@@ -49,7 +49,7 @@ def delete_podcast_from_channel(
     for podcast in channel.known_podcasts:
         if get_podcast_id(podcast) == podcast_id:
             _delete_podcast(directory, channel, podcast)
-            podcast._replace(status=DeletedStatus())
+            podcast = podcast._replace(status=DeletedStatus())
         updated_podcasts.append(podcast)
 
     return updated_podcasts

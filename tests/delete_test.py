@@ -11,10 +11,8 @@ from podcast.delete import delete_podcast
 from podcast.delete import delete_podcast_from_channel
 from podcast.files import download_location
 from podcast.files import trash_location
-from podcast.models import DeletedStatus
 from podcast.models import get_channel_id
 from podcast.models import get_podcast_id
-from podcast.models import Podcast
 from podcast.models import RadioDirectory
 
 
@@ -80,9 +78,7 @@ def test_delete_podcast_from_channel():
             RadioDirectory("tmp"), channel, podcast_id)
 
     assert len(result) == 1
-    assert result[0] == Podcast(
-        status=DeletedStatus(),
-        data=fake_podcast.data)
+    assert type(result[0].status).__name__ == 'DeletedStatus'
 
 
 def test_delete_podcast():
