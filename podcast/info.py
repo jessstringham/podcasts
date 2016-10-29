@@ -3,21 +3,34 @@ import typing
 
 import simplejson
 
+ChannelStatus = typing.NewType(
+    'ChannelStatus',
+    typing.Dict[str, int])
 
-# TODO: add better schemas here
+RadioStatus = typing.NewType(
+    'RadioStatus',
+    typing.Dict[str, ChannelStatus])
+
+
+InfoResult = typing.Union[
+    None,
+    RadioStatus,
+    bool,  # TODO add schemas for these
+    typing.Dict[str, str],  # TODO add schemas for these
+]
+
 InfoContent = typing.NamedTuple('Info', [
-    ('result', typing.Optional[typing.Any]),
+    ('result', InfoResult),
     ('error', typing.Optional[str]),
 ])
 
 
 def build_info_content(
-        result: typing.Optional[typing.Any]=None,
+        result: InfoResult=None,
         error: typing.Optional[str]=None) -> InfoContent:
     return InfoContent(
-        result=None,
-        error=None
-    )
+        result=result,
+        error=error)
 
 Info = typing.NamedTuple('Info', [
     ('timestamp', float),

@@ -3,23 +3,29 @@ from collections import Counter
 
 from podcast.files import download_location
 from podcast.info import build_info_content
+from podcast.info import ChannelStatus
 from podcast.info import InfoContent
+from podcast.info import RadioStatus
+from podcast.models import Channel
 from podcast.models import get_channel_id
 from podcast.models import get_podcast_id
 from podcast.models import Radio
 from podcast.models import read_channel_from_id
 
 
-def print_status(radio: Radio) -> typing.Tuple[Radio, InfoContent]:
-    status = build_info_content(
-        result=dict(Counter(
-            '{0} -- {1}'.format(
-                get_channel_id(channel),
-                type(podcast.status).__name__)
-            for channel in radio.channels
+def build_channel_status(channel: Channel) -> ChannelStatus:
+    return ChannelStatus(
+        dict(Counter(
+            type(podcast.status).__name__
             for podcast in channel.known_podcasts)))
 
-    return radio, status
+
+def print_status(radio: Radio) -> typing.Tuple[Radio, InfoContent]:
+    radio_status = RadioStatus(dict(
+        (get_channel_id(channel), build_channel_status(channel))
+        for channel in radio.channels))
+
+    return radio, build_info_content(result=radio_status)
 
 
 def has_new_podcast_from_channel(
