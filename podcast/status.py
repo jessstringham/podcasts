@@ -72,3 +72,34 @@ def recent_podcast_from_channel(
             })
 
     return radio, info_content
+
+
+def recent_podcast_from_radio(
+        radio: Radio,
+) -> typing.Tuple[Radio, InfoContent]:
+    info_content = build_info_content(error='none found')
+
+    new_podcasts = [
+        (channel, podcast)
+        for channel in radio.channels
+        for podcast in channel.known_podcasts
+        if type(podcast.status).__name__ == 'NewStatus'
+    ]
+
+    if new_podcasts:
+        channel, recent_podcast = sorted(
+            new_podcasts,
+            key=lambda p: p[1].data.published,
+            reverse=True)[0]
+
+        info_content = build_info_content(
+            result={
+                'path': download_location(
+                    radio.directory,
+                    channel,
+                    recent_podcast),
+                'channel_id': get_channel_id(channel),
+                'podcast_id': get_podcast_id(recent_podcast),
+            })
+
+    return radio, info_content

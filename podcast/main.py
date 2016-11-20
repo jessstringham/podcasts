@@ -13,6 +13,7 @@ from podcast.models import Radio  # noqa
 from podcast.status import has_new_podcast_from_channel
 from podcast.status import print_status
 from podcast.status import recent_podcast_from_channel
+from podcast.status import recent_podcast_from_radio
 from podcast.update import update_radio
 
 RadioAction = typing.Callable[
@@ -29,6 +30,7 @@ radio_action = {
     'status': print_status,
     'update': update_radio,
     'download': download_radio,
+    'recent': recent_podcast_from_radio,
 }  # type: typing.Dict[str, RadioAction]  # noqa
 
 channel_action = {
