@@ -16,9 +16,11 @@ from podcast.models import read_channel_from_id
 
 def build_channel_status(channel: Channel) -> ChannelStatus:
     return ChannelStatus(
-        dict(Counter(
+        counts=dict(Counter(
             type(podcast.status).__name__
-            for podcast in channel.known_podcasts)))
+            for podcast in channel.known_podcasts)),
+        name=channel.channel_info.name,
+    )
 
 
 def print_status(radio: Radio) -> typing.Tuple[Radio, InfoContent]:

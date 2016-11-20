@@ -3,9 +3,15 @@ import typing
 
 import simplejson
 
-ChannelStatus = typing.NewType(
-    'ChannelStatus',
-    typing.Dict[str, int])  # maps a status to number in that status
+
+ChannelStatus = typing.NamedTuple(
+    'ChannelStatus', [
+        # maps a status to number in that status
+        ('counts', typing.Dict[str, int]),
+        # Long name of the channel
+        ('name', str),
+    ]
+)
 
 RadioStatus = typing.NewType(
     'RadioStatus',
