@@ -5,18 +5,24 @@ import simplejson
 
 ChannelStatus = typing.NewType(
     'ChannelStatus',
-    typing.Dict[str, int])
+    typing.Dict[str, int])  # maps a status to number in that status
 
 RadioStatus = typing.NewType(
     'RadioStatus',
-    typing.Dict[str, ChannelStatus])
+    typing.Dict[str, ChannelStatus])  # maps a station to ChannelStatus
+
+PodcastLocation = typing.NamedTuple('PodcastLocation', [
+    ('path', str),
+    ('podcast_id', str),
+    ('channel_id', str),
+])
 
 
 InfoResult = typing.Union[
     None,
     RadioStatus,
+    PodcastLocation,
     bool,  # TODO add schemas for these
-    typing.Dict[str, str],  # TODO add schemas for these
 ]
 
 InfoContent = typing.NamedTuple('Info', [

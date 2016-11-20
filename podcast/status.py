@@ -5,6 +5,7 @@ from podcast.files import download_location
 from podcast.info import build_info_content
 from podcast.info import ChannelStatus
 from podcast.info import InfoContent
+from podcast.info import PodcastLocation
 from podcast.info import RadioStatus
 from podcast.models import Channel
 from podcast.models import get_channel_id
@@ -62,14 +63,14 @@ def recent_podcast_from_channel(
             reverse=True)[0]
 
         info_content = build_info_content(
-            result={
-                'path': download_location(
+            result=PodcastLocation(
+                path=download_location(
                     radio.directory,
                     channel,
                     recent_podcast),
-                'channel_id': channel_id,
-                'podcast_id': get_podcast_id(recent_podcast),
-            })
+                channel_id=channel_id,
+                podcast_id=get_podcast_id(recent_podcast),
+            ))
 
     return radio, info_content
 
@@ -93,13 +94,13 @@ def recent_podcast_from_radio(
             reverse=True)[0]
 
         info_content = build_info_content(
-            result={
-                'path': download_location(
+            result=PodcastLocation(
+                path=download_location(
                     radio.directory,
                     channel,
                     recent_podcast),
-                'channel_id': get_channel_id(channel),
-                'podcast_id': get_podcast_id(recent_podcast),
-            })
+                channel_id=get_channel_id(channel),
+                podcast_id=get_podcast_id(recent_podcast),
+            ))
 
     return radio, info_content
